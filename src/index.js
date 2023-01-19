@@ -1,18 +1,14 @@
 const express = require('express');
+const router = require('./routes');
 
-const setupViewEngine = require('./config/viewEngine')
+const setupViewEngine = require('./config/viewEngine');
 const config = require('./config/config');
 
 const app = express();
 setupViewEngine(app);
 
-app.use(express.static('./src/static'));
+app.use(express.static('./src/public'));
+app.use(router);
 // require('./config/viewEngine')(app); // 1 line setup
-
-app.get('/', (req, res) => {
-    res.render('index');
-});
-
-// app.get('/css/cite.css')
 
 app.listen(config.port, () => console.log(`Server is running on port ${config.port}...`));
