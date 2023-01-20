@@ -7,14 +7,14 @@ const router = require('express').Router(); // var 1
 // const router = Router();
 // var 2
 
-router.get('/', (req, res) => {
-    res.render('index');
-});
+router.get('/', cubeController.getHome);
 
 router.get('/about', (req, res) => {
     res.render('about');
 });
 
-router.get('/create', cubeController.getCreateCube);
+router.route('/create')
+    .get(cubeController.getCreateCube)
+    .post(cubeController.postCreateCube)
 
 module.exports = router;
