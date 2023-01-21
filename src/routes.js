@@ -7,7 +7,9 @@ const router = require('express').Router(); // var 1
 // const router = Router();
 // var 2
 
-router.get('/', cubeController.getHome);
+router.route('/')
+    .get(cubeController.getHome)
+    .post(cubeController.postHome);
 
 router.get('/about', (req, res) => {
     res.render('about');
