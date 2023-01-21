@@ -1,4 +1,5 @@
-const db = require('../db.json')
+const db = require('../db.json');
+const Cube = require('../createClass');
 
 exports.getHome = (req, res) => {
     res.render('index', { cube: db });
@@ -9,7 +10,12 @@ exports.getCreateCube = (req, res) => {
 }
 
 exports.postCreateCube = (req, res) => {
-    console.log(req.body);
+    const id = db.length + 1;
+    let cube = new Cube(req.body);
+    cube.save(id);
 
-    res.send('Form submitted')
+    // makeACube(req.body, id);
+
+
+    res.redirect('/');
 }
