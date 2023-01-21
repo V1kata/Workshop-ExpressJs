@@ -19,3 +19,14 @@ exports.postCreateCube = (req, res) => {
 
     res.redirect('/');
 }
+
+exports.getDetails = (req, res) => {
+    const id = req.url.split('/')[2];
+    const cube = db.find(el => el.id == id);
+
+    res.render('details', cube);
+}
+
+exports.getNotFound = (req, res) => {
+    res.render('404')
+}
