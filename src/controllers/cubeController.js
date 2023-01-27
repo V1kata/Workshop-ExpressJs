@@ -11,9 +11,9 @@ exports.postCreateCube = async (req, res) => {
     res.redirect('/');
 }
 
-exports.getDetails = (req, res) => {
-    const id = req.url.split('/')[2];
-    const cube = db.find(el => el.id == id);
+exports.getDetails = async (req, res) => {
+    const id = req.params.cubeId;
+    const cube = await Cube.findById(id);
 
     res.render('details', cube);
 }

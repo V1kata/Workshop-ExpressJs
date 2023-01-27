@@ -18,7 +18,9 @@ router.route('/create')
     .get(cubeController.getCreateCube)
     .post(cubeController.postCreateCube)
 
-router.get('/details/:id', cubeController.getDetails);
+router.get('/details/:cubeId', cubeController.getDetails);
+
+router.get('/404', homeController.getNotFound);
 
 router.get('*', homeController.getNotFound);
 
