@@ -1,7 +1,8 @@
-const db = require('../db.json');
+const Cube = require('../models/Cube');
 
-exports.getHome = (req, res) => {
-    res.render('index', { cube: db });
+exports.getHome = async (req, res) => {
+    const cube = await Cube.find().lean();
+    res.render('index', { cube });
 };
 
 exports.postHome = (req, res) => {

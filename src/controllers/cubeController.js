@@ -1,17 +1,12 @@
-const db = require('../db.json');
-const Cube = require('../createClass');
+const Cube = require('../models/Cube');
 
 exports.getCreateCube = (req, res) => {
     res.render('create');
 }
 
-exports.postCreateCube = (req, res) => {
-    const id = db.length + 1;
+exports.postCreateCube = async (req, res) => {
     let cube = new Cube(req.body);
-    cube.save(id);
-
-    // makeACube(req.body, id);
-
+    cube.save();
 
     res.redirect('/');
 }
