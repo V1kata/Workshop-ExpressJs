@@ -1,4 +1,5 @@
 const cubeController = require('./controllers/cubeController');
+const homeController = require('./controllers/homeController');
 const router = require('express').Router(); // var 1
 
 // const express = require('express');
@@ -8,12 +9,10 @@ const router = require('express').Router(); // var 1
 // var 2
 
 router.route('/')
-    .get(cubeController.getHome)
-    .post(cubeController.postHome);
+    .get(homeController.getHome)
+    .post(homeController.postHome);
 
-router.get('/about', (req, res) => {
-    res.render('about');
-});
+router.get('/about', homeController.getAbout);
 
 router.route('/create')
     .get(cubeController.getCreateCube)
@@ -21,6 +20,6 @@ router.route('/create')
 
 router.get('/details/:id', cubeController.getDetails);
 
-router.get('*', cubeController.getNotFound);
+router.get('*', homeController.getNotFound);
 
 module.exports = router;
