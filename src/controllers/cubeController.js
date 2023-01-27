@@ -5,8 +5,15 @@ exports.getCreateCube = (req, res) => {
 }
 
 exports.postCreateCube = async (req, res) => {
-    let cube = new Cube(req.body);
-    cube.save();
+
+    try {
+        let cube = new Cube(req.body);
+        cube.save();
+    } catch (err) {
+        console.log(err.message);
+        res.redirect('/404');
+        return;
+    }
 
     res.redirect('/');
 }
