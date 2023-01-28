@@ -21,7 +21,8 @@ exports.postCreateCube = async (req, res) => {
 
 exports.getDetails = async (req, res) => {
     const id = req.params.cubeId;
-    const cube = await Cube.findById(id);
+    const cube = await Cube.findById(id).populate('accessories').lean();
+    console.log(cube)
 
-    res.render('details', cube);
+    res.render('details', { cube });
 }
