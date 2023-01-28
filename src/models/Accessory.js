@@ -14,6 +14,10 @@ const accessorySchema = new mongoose.Schema({
         type: String,
         required: true,
         // http and https validation
+    },
+    cube: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Cube'
     }
 });
 
