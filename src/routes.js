@@ -25,6 +25,8 @@ router.route('/create/accessory')
     .get(accessoryController.getAccessoryCreate)
     .post(accessoryController.postAccessory);
 
+router.get('/attach/accessory/:id', accessoryController.getAttachAccessory);
+
 router.get('/404', homeController.getNotFound);
 
 router.get('*', homeController.getNotFound);
