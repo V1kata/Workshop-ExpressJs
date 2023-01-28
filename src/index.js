@@ -4,6 +4,7 @@ const router = require('./routes');
 const setupViewEngine = require('./config/viewEngine');
 const config = require('./config/config');
 const initDatabase = require('./config/database');
+const requestHelper = require('./config/requestOutputter');
 
 const app = express();
 setupViewEngine(app);
@@ -11,6 +12,7 @@ setupViewEngine(app);
 
 app.use(express.static('./src/public'));
 app.use(express.urlencoded({ extended: false }));
+app.use(requestHelper);
 app.use(router);
 
 initDatabase()
