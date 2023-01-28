@@ -14,5 +14,5 @@ app.use(express.urlencoded({ extended: false }));
 app.use(router);
 
 initDatabase()
-    .then(() => app.listen(config.port, () => console.log(`Server is running on port ${config.port}...`)))
+    .then(() => app.listen(config.port, () => console.log(`Server is running on port http://localhost:${config.port}...`)))
     .catch((error) => console.log(error));
