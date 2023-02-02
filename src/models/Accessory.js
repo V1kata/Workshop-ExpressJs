@@ -15,7 +15,11 @@ const accessorySchema = new mongoose.Schema({
         type: String,
         required: true,
         // http and https validation
-    }
+    },
+    cubes: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Cube'
+    }]
 });
 
 accessorySchema.path('imageUrl').validate(function(value) {

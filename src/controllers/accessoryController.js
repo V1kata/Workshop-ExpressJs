@@ -20,7 +20,7 @@ exports.postAccessory = async (req, res) => {
 exports.getAttachAccessory = async (req, res) => {
     const id = req.params.id;
     const cube = await Cube.findById(id).lean();
-    const accessories = await Accessory.find({ _id: { $nin: cube.accessories } }).lean();
+    const accessories = await Accessory.find({ cubes: [] }).lean();
 
     res.render('accessories/attachAccessory', { cube, accessories });
 }
@@ -28,11 +28,15 @@ exports.getAttachAccessory = async (req, res) => {
 exports.postAttachAccessory = async (req, res) => {
     const cubeId = req.params.id
     const accessoryId = req.body.accessory;
-    
+
+    const accessory = await Accessory.findById(accessoryId);
+    accessory.cubes.push(cubeId);
+
     const cube = await Cube.findById(cubeId);
     cube.accessories.push(accessoryId);
 
     await cube.save();
+    await accessory.save();
 
     res.redirect(`/details/${cubeId}`);
 }
