@@ -2,7 +2,7 @@ const Cube = require('../models/Cube');
 
 exports.getHome = async (req, res) => {
     const cube = await Cube.find().lean();
-    res.render('index', { cube });
+    res.render('home/index', { cube });
 };
 
 exports.postHome = (req, res) => {
@@ -22,17 +22,17 @@ exports.postHome = (req, res) => {
     }
     
     if (foundCubes.length == 0) {
-        res.render('index', { cube: db });
+        res.render('home/index', { cube: db });
         return;
     }
     
-    res.render('index', { cube: foundCubes });
+    res.render('home/index', { cube: foundCubes });
 };
 
 exports.getAbout = (req, res) => {
-    res.render('about');
+    res.render('home/about');
 };
 
 exports.getNotFound = (req, res) => {
-    res.render('404');
+    res.render('home/404');
 };
