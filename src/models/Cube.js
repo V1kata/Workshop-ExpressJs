@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validationPattern = /http[s]?:\/\/[\w./-]+/;
 
 const cubeSchema = new mongoose.Schema({
     name: {
@@ -25,8 +26,11 @@ const cubeSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Accessory'
     }]
-    // Accesoried
 });
+
+cubeSchema.path('imageUrl').validate(function(value) {
+    return validationPattern.test(value);
+}, 'Image url needs to start with http or https');
 
 const Cube = mongoose.model('Cube', cubeSchema);
 
