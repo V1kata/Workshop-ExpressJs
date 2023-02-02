@@ -1,7 +1,9 @@
-const cubeController = require('./controllers/cubeController');
-const homeController = require('./controllers/homeController');
-const accessoryController = require('./controllers/accessoryController');
 const router = require('express').Router(); // var 1
+
+const homeController = require('./controllers/homeController');
+const cubeController = require('./controllers/cubeController');
+const accessoryController = require('./controllers/accessoryController');
+const authController = require('./controllers/authController');
 
 // const express = require('express');
 // const Router = express.Router;
@@ -30,6 +32,12 @@ router.route('/attach/accessory/:id')
     .post(accessoryController.postAttachAccessory)
 
 router.get('/404', homeController.getNotFound);
+
+router.route('/register')
+    .get(authController.getRegister);
+
+router.route('/login')
+    .get(authController.getLogin);
 
 router.get('*', homeController.getNotFound);
 
