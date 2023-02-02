@@ -34,10 +34,14 @@ router.route('/attach/accessory/:id')
 router.get('/404', homeController.getNotFound);
 
 router.route('/register')
-    .get(authController.getRegister);
+    .get(authController.getRegister)
+    .post(authController.postRegister);
 
 router.route('/login')
-    .get(authController.getLogin);
+    .get(authController.getLogin)
+    .post(authController.postLogin);
+
+router.get('/logout', authController.getLogout);
 
 router.get('*', homeController.getNotFound);
 
