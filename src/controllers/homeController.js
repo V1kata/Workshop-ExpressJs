@@ -5,25 +5,24 @@ exports.getHome = async (req, res) => {
     res.render('home/index', { cube });
 };
 
-exports.postHome = (req, res) => {
+exports.postHome = async (req, res) => {
     const { search, from, to } = req.body; 
-    let foundCubes = db.slice();
-    
+    let foundCubes = await Cube.find().lean();
+
     if (search) {
         foundCubes = foundCubes.filter(el => el.name.toLowerCase().includes(search.toLowerCase()));
     }
     
     if (from) {
-        foundCubes = foundCubes.filter(el => Number(from) <= Number(el.diffLevel));
+        foundCubes = foundCubes.filter(el => Number(from) <= Number(el.difficultyLevel));
     }
 
     if (to) {
-        foundCubes = foundCubes.filter(el => Number(to) >= Number(el.diffLevel));
+        foundCubes = foundCubes.filter(el => Number(to) >= Number(el.difficultyLevel));
     }
     
-    if (foundCubes.length == 0) {
-        res.render('home/index', { cube: db });
-        return;
+    if (!foundCubes.length) {
+        return res.redirect('/');
     }
     
     res.render('home/index', { cube: foundCubes });
