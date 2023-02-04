@@ -38,6 +38,6 @@ exports.postLogin = async (req, res) => {
     }
 }
 
-exports.getLogout = (req, res) => { 
+exports.getLogout = (req, res) => {
     res.clearCookie('auth'); res.redirect('/'); 
 }

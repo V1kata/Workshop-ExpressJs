@@ -4,7 +4,7 @@ const homeController = require('./controllers/homeController');
 const cubeController = require('./controllers/cubeController');
 const accessoryController = require('./controllers/accessoryController');
 const authController = require('./controllers/authController');
-
+const { authentication, isAuthenticated } = require('./config/authMiddleware');
 // const express = require('express');
 // const Router = express.Router;
 
@@ -18,13 +18,13 @@ router.route('/')
 router.get('/about', homeController.getAbout);
 
 router.route('/create')
-    .get(cubeController.getCreateCube)
+    .get(isAuthenticated, cubeController.getCreateCube)
     .post(cubeController.postCreateCube)
 
 router.get('/details/:cubeId', cubeController.getDetails);
 
 router.route('/create/accessory')
-    .get(accessoryController.getAccessoryCreate)
+    .get(isAuthenticated, accessoryController.getAccessoryCreate)
     .post(accessoryController.postAccessory);
 
 router.route('/attach/accessory/:id')

@@ -6,6 +6,7 @@ const setupViewEngine = require('./config/viewEngine');
 const config = require('./config/config');
 const initDatabase = require('./config/database');
 const requestHelper = require('./config/requestOutputter');
+const auth = require('./config/authMiddleware')
 
 const app = express();
 setupViewEngine(app);
@@ -15,6 +16,7 @@ app.use(express.static('./src/public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(requestHelper);
+app.use(auth.authentication);
 app.use(router);
 
 initDatabase()
