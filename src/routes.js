@@ -23,6 +23,14 @@ router.route('/create')
 
 router.get('/details/:cubeId', cubeController.getDetails);
 
+router.route('/edit/:cubeId')
+    .get(cubeController.getEdit)
+    .post(cubeController.postEdit);
+
+router.route('/delete/:cubeId')
+    .get(cubeController.getDelete)
+    .post(cubeController.postDelete);
+
 router.route('/create/accessory')
     .get(isAuthenticated, accessoryController.getAccessoryCreate)
     .post(accessoryController.postAccessory);

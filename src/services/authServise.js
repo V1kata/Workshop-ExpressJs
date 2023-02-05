@@ -17,7 +17,7 @@ exports.login = async (username, password) => {
 
     const payload = { _id: user._id, username };
     const secret = config.secret;
-    const token = await jwt(payload, secret, { expiresIn: '2h' });
+    const token = await jwt.promiseSign(payload, secret, { expiresIn: '2h' });
 
     return token;
 }

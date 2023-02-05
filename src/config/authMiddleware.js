@@ -14,9 +14,9 @@ exports.authentication = async (req, res, next) => {
 
     if (token) {
         try {
-            const decodetToken = await promiseSign(token, config.secret);
+            const decodedToken = await promiseSign.promiseVerify(token, config.secret);
 
-            req.user = decodetToken;
+            req.user = decodedToken;
             req.isAuth = true;
         } catch(err) {
             console.log(err.message);
