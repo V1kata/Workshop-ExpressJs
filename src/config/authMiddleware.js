@@ -22,6 +22,7 @@ exports.authentication = async (req, res, next) => {
             res.locals.isAuth = true;
         } catch(err) {
             console.log(err.message);
+            res.clearCookie('auth');
             res.redirect('/404');
         }
     } else {
