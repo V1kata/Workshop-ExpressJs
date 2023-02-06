@@ -18,12 +18,15 @@ exports.authentication = async (req, res, next) => {
 
             req.user = decodedToken;
             req.isAuth = true;
+
+            res.locals.isAuth = true;
         } catch(err) {
             console.log(err.message);
             res.redirect('/404');
         }
     } else {
         req.isAuth = false;
+        res.locals.isAuth = false;
     }
 
     next()

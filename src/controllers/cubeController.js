@@ -1,4 +1,3 @@
-const { authentication } = require('../config/authMiddleware');
 const Cube = require('../models/Cube');
 const { updateById, findById, deleteById } = require('../services/cubeServise');
 
@@ -24,7 +23,7 @@ exports.postCreateCube = async (req, res) => {
 exports.getDetails = async (req, res) => {
     const id = req.params.cubeId;
     const cube = await findById(id).populate('accessories').lean();
-    const isOwner = cube.owner == req.user._id;
+    const isOwner = cube.owner == req?.user?._id;
 
     res.render('cubes/details', { cube, isOwner });
 }
