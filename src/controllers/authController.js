@@ -2,12 +2,13 @@ const User = require("../models/User");
 
 const authServise = require('../services/authServise');
 
-exports.getRegister = (req, res) => res.render('auth/registerPage');
+exports.getRegister = (req, res) => res.render('auth/register');
 
 exports.postRegister = async (req, res) => {
     const { username, password, repeatPassword } = req.body;
 
     if (password !== repeatPassword) {
+        res.locals.errors = 'Password needs to be the same as the repeat password'
         return res.redirect('/404');
     }
 
@@ -22,7 +23,7 @@ exports.postRegister = async (req, res) => {
     res.redirect('/login');
 }
 
-exports.getLogin = (req, res) => res.render('auth/loginPage');
+exports.getLogin = (req, res) => res.render('auth/login');
 
 exports.postLogin = async (req, res) => {
     const { username, password } = req.body;
@@ -34,10 +35,11 @@ exports.postLogin = async (req, res) => {
         res.redirect('/');
     } catch (err) {
         console.log(err.message);
-        res.redirect('/404');
+        return res.render('auth/login', { error: err.message });
     }
 }
 
 exports.getLogout = (req, res) => {
-    res.clearCookie('auth'); res.redirect('/'); 
+    res.clearCookie('auth'); 
+    res.redirect('/'); 
 }
