@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
-const validationPattern = /http[s]?:\/\/[\w./-]+/;
+const httpValidationPattern = /http[s]?:\/\/[\w./-]+/;
+const validationPattern = /[\w ,-.*]+/;
 
 const accessorySchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        minLenght: 5
     },
     description: {
         type: String,
         required: true,
-        maxLength: 50
+        minLength: 20
     },
     imageUrl: {
         type: String,
@@ -22,8 +24,16 @@ const accessorySchema = new mongoose.Schema({
     }]
 });
 
-accessorySchema.path('imageUrl').validate(function(value) {
+accessorySchema.path('name').validate(function(value) {
     return validationPattern.test(value);
+}, 'The name needs to be only English letters, digits, and whitespaces');
+
+accessorySchema.path('description').validate(function(value) {
+    return validationPattern.test(value);
+}, 'Description needs to be only English letters, digits, and whitespaces');
+
+accessorySchema.path('imageUrl').validate(function(value) {
+    return httpValidationPattern.test(value);
 }, 'Image url needs to start with http or https');
 
 const Accessory = mongoose.model('Accessory', accessorySchema);

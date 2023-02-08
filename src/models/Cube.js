@@ -1,20 +1,21 @@
 const mongoose = require('mongoose');
-const validationPattern = /http[s]?:\/\/[\w./-]+/;
+const httpValidationPattern = /http[s]?:\/\/[\w./-]+/;
+const validationPattern = /[\w ,-.*]+/;
 
 const cubeSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        minLength: [5, 'Name need to be atleast 5 symbols']
     },
     description: {
         type: String,
         required: true,
-        maxLength: 200
+        minLength: 20
     },
     imageUrl: {
         type: String,
-        required: true,
-        // http and https validation
+        required: true
     },
     difficultyLevel: {
         type: Number,
@@ -32,8 +33,16 @@ const cubeSchema = new mongoose.Schema({
     }
 });
 
-cubeSchema.path('imageUrl').validate(function(value) {
+cubeSchema.path('name').validate(function(value) {
     return validationPattern.test(value);
+}, 'The name needs to be only English letters, digits, and whitespaces');
+
+cubeSchema.path('description').validate(function(value) {
+    return validationPattern.test(value);
+}, 'Description needs to be only English letters, digits, and whitespaces');
+
+cubeSchema.path('imageUrl').validate(function(value) {
+    return httpValidationPattern.test(value);
 }, 'Image url needs to start with http or https');
 
 const Cube = mongoose.model('Cube', cubeSchema);
