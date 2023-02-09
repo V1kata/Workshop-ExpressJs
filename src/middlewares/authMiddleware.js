@@ -1,5 +1,5 @@
-const config = require("./config");
-const promiseSign = require("./jwt");
+const config = require("../config/config");
+const promiseSign = require("../config/jwt");
 
 exports.isAuthenticated = (req, res, next) => {
     if (!req.isAuth) {
@@ -21,7 +21,7 @@ exports.authentication = async (req, res, next) => {
 
             res.locals.isAuth = true;
         } catch(err) {
-            console.log(err.message);
+            res.locals.errors = err.message;
             res.clearCookie('auth');
             res.redirect('/404');
         }

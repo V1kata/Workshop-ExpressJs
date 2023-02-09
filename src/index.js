@@ -6,7 +6,7 @@ const setupViewEngine = require('./config/viewEngine');
 const config = require('./config/config');
 const initDatabase = require('./config/database');
 const requestHelper = require('./config/requestOutputter');
-const auth = require('./config/authMiddleware')
+const auth = require('./middlewares/authMiddleware')
 
 const app = express();
 setupViewEngine(app);
