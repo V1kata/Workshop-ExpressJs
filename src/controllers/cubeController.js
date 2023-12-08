@@ -12,7 +12,7 @@ exports.postCreateCube = async (req, res) => {
         let cube = new Cube(req.body);
         cube.save();
     } catch (err) {
-        console.log(err.message);
+        res.locals.errors = err.message;
         res.redirect('/404');
         return;
     }
@@ -37,8 +37,14 @@ exports.postEdit = async (req, res) => {
     const data = req.body;
     const id = req.params.cubeId;
 
-    const cube = await updateById(id, data);
-    console.log(cube);
+    try {
+        const cube = await updateById(id, data);
+        console.log(cube);
+    } catch(err) {
+        throw new Error('Can not update at the moment');
+        return;
+    }
+
     res.redirect(`/details/${id}`);
 }
 
@@ -48,6 +54,12 @@ exports.getDelete = async (req, res) => {
 }
 
 exports.postDelete = async (req, res) => {
-    await deleteById(req.params.cubeId);
+    try {
+        await deleteById(req.params.cubeId);
+    } catch(err) {
+        res.locals.errors = err.message;
+        return
+    }
+    
     res.redirect('/');
 }

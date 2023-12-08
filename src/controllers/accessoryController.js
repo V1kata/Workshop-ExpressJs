@@ -10,7 +10,7 @@ exports.postAccessory = async (req, res) => {
         await Accessory.create(req.body);
     } catch (err) {
         console.log(err.message);
-        res.redirect('/404');
+        res.locals.errors = err.message;
         return;
     }
 
@@ -35,8 +35,14 @@ exports.postAttachAccessory = async (req, res) => {
     const cube = await Cube.findById(cubeId);
     cube.accessories.push(accessoryId);
 
-    await cube.save();
-    await accessory.save();
+    try {
+        await cube.save();
+        await accessory.save();
+    } catch(err) {
+        res.locals.errors = err.message;
+        return
+    }
+
 
     res.redirect(`/details/${cubeId}`);
 }

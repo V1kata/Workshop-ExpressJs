@@ -6,7 +6,8 @@ const setupViewEngine = require('./config/viewEngine');
 const config = require('./config/config');
 const initDatabase = require('./config/database');
 const requestHelper = require('./config/requestOutputter');
-const auth = require('./middlewares/authMiddleware')
+const auth = require('./middlewares/authMiddleware');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 setupViewEngine(app);
@@ -18,6 +19,7 @@ app.use(cookieParser());
 app.use(requestHelper);
 app.use(auth.authentication);
 app.use(router);
+app.use(errorHandler);
 
 initDatabase()
     .then(() => app.listen(config.port, () => console.log(`Server is running on port http://localhost:${config.port}...`)))

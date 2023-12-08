@@ -4,12 +4,11 @@ const authServise = require('../services/authServise');
 
 exports.getRegister = (req, res) => res.render('auth/register');
 
-exports.postRegister = async (req, res) => {
+exports.postRegister = async (req, res, next) => {
     const { username, password, repeatPassword } = req.body;
 
     if (password !== repeatPassword) {
-        res.locals.errors = 'Password needs to be the same as the repeat password'
-        return res.redirect('/404');
+        return res.render('auth/register', { error: err.message });
     }
 
     const existingUser = await User.find({ username });
